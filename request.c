@@ -50,14 +50,15 @@ void parse_request(char buf[BUFSIZE], request *req) {
   char *token;
 
   /* strtok() needs NULL on repeated calls to return the next substring, and returns NULL once it's done */
-  for (token = strtok(buf, " \r\n"); token != NULL; token = strtok(NULL, " \r\n")) {
-    switch (req->nargs) {
-      case 0: strcpy(req->method, token); break;
-      case 1: strcpy(req->filename, token); break;
-      case 2: strcpy(req->protocol, token); break;
-      case 3: strcpy(req->host, token); break;
-    }
-    req->nargs++;
+  char *args[] = {
+      req->method,
+      req->filename,
+      req->protocol,
+      req->host};
+
+  for (token = strtok(buf, " \r\n"); token && req->nargs < 4; token = strtok(NULL, " \r\n"))
+  {
+    strcpy(args[req->nargs++], token);
   }
 
   req->keep_alive = !strcmp(req->protocol, "HTTP/1.1");
