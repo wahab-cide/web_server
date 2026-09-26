@@ -6,7 +6,7 @@ A multithreaded HTTP/1.0 and HTTP/1.1 web server in C. Serves static files with 
 
 ```sh
 make
-./server -document_root DOC_ROOT -port 8080
+./server -document_root <file dir> -port <port>
 ```
 
 Then open `http://localhost:8080/`.
