@@ -29,7 +29,7 @@ static int open_response_file(char filename[BUFSIZE], int malformed, const char 
   int fd;
 
   if (malformed) {
-    *status = "400 Malformed Request\r\n";
+    *status = "400 Bad Request\r\n";
   } else if (strstr(filename, "..") != NULL || strstr(filename, "./") != NULL) {
     /* trying to access above root or use relative file paths (which is bad in HTTP) */
     *status = "403 Permission Denied\r\n";
@@ -40,7 +40,7 @@ static int open_response_file(char filename[BUFSIZE], int malformed, const char 
     }
     fd = open_in_root(filename);
     if (fd >= 0) {
-      *status = "200 OK \r\n";
+      *status = "200 OK\r\n";
       return fd;
     }
     /* 404 covers not found and any other error of unknown origin */
@@ -58,9 +58,9 @@ static const char *content_type(const char *filename) {
 
   if (ext == NULL || strchr(ext, '/') != NULL) return "unknown"; /* no extension */
   if (!strcmp(ext, ".html")) return "text/html";
-  if (!strcmp(ext, ".txt")) return "text/txt";
+  if (!strcmp(ext, ".txt")) return "text/plain";
   if (!strcmp(ext, ".gif")) return "image/gif";
-  if (!strcmp(ext, ".jpg")) return "image/jpg";
+  if (!strcmp(ext, ".jpg")) return "image/jpeg";
   return "unknown";
 }
 
