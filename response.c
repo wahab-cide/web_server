@@ -86,9 +86,9 @@ void send_response(request *req, int connfd) {
   gmtime_r(&now, &tm);
   strftime(date, sizeof(date), "%a, %d %b %Y %H:%M:%S GMT", &tm);
 
-  snprintf(buf, BUFSIZE, "%s%sDate: %s\r\nContent-Type: %s\r\nContent-Length: %ld\r\n\r\n",
+  snprintf(buf, BUFSIZE, "%s%sDate: %s\r\nContent-Type: %s\r\nConnection: %s\r\nContent-Length: %ld\r\n\r\n",
            req->keep_alive ? "HTTP/1.1 " : "HTTP/1.0 ", status,
-           date, content_type(req->filename), length);
+           date, content_type(req->filename), req->keep_alive ? "keep-alive" : "close", length);
 
   /* send header before sending information */
   send(connfd, buf, strlen(buf), 0);
