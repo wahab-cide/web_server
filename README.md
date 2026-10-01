@@ -36,3 +36,8 @@ The document root needs `index.html` (served for `/`) and the error pages `400.h
 
 - HTTP/1.1 requests must send `Host:` as the first header
 - Requests must fit in 2048 bytes
+
+## Group members
+
+- Abdul Majeed Abdallah - aa33
+- Abdul Wahab Cide Ali - ac44
